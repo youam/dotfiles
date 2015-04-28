@@ -1,0 +1,6 @@
+HISTFILE=~/.histfile
+HISTSIZE=100000
+SAVEHIST=100000
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt hist_find_no_dups hist_ignore_dups
