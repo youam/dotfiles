@@ -38,7 +38,19 @@ function wipespace () {
 	wipespace $fs $lim
 }
 
+echo "compacting etckeeper repository"
+cd /etc/.git && git gc --aggressive --prune
+
+echo "cleaning apt package cache"
 aptitude clean
+
+kernels=$(dpkg -l |grep linux-image | grep -v linux-image-amd64 | grep -v '^rc' | wc -l)
+if [ $kernels != 1 ]; then
+	echo "you've got more than one kernel image installed."
+	echo "please clean that up and/or ignore, then press enter to continue"
+	read
+fi
+
 
 wipeswap
 
