@@ -7,20 +7,23 @@ set -e
 aptitude clean
 
 function wipespace () {
+	# usage: wipespaec $path $space
+	# fill $space with zeroes until only $space mb are left empty
 	local fs=$1
+	local lim=$2
 	local dummy
 	local freekb
 	local wipemb
 	freekb=$(df -P $fs | tail -n1 | awk '{print $4}')
-	if [ $freekb -lt $((512*1024)) ]; then return; fi
-	wipemb=$((freekb/1024/2))
+	if [ $freekb -lt $((lim*1024)) ]; then return; fi
+	wipemb=$((((freekb/1024)-$lim)/2))
 	echo wiping $wipemb mb on $fs
 	dd if=/dev/zero of=$fs/WIPESPACE.TMP conv=notrunc oflag=append bs=1024k count=$wipemb 2>/dev/null
-	wipespace $fs
+	wipespace $fs $lim
 }
 
 df -P | grep '^/' | while read fs_dev fs_size x fs_free x fs_mnt; do
-	wipespace $fs_mnt
+	wipespace $fs_mnt 128
 	rm -f $fs_mnt/WIPESPACE.TMP
 done
 
