@@ -41,6 +41,16 @@ function wipespace () {
 	wipespace $fs $lim
 }
 
+if [ -e ~/.wipedone ]; then
+	d=$(stat -printf %Y ~/.wipedone)
+	n=$(date +%s)
+	# a bit less than a day, to reduce funny errors
+	if [ $((d+86000)) -gt $n ]; then
+		echo "already did run in the last day. remove ~/.wipedone to run anyway"
+		exit 2
+	fi
+fi
+
 echo "compacting etckeeper repository"
 cd /etc/.git && git gc --aggressive --prune
 
@@ -62,3 +72,4 @@ df -P | grep '^/' | while read fs_dev fs_size x fs_free x fs_mnt; do
 	rm -f $fs_mnt/WIPESPACE.TMP
 done
 
+touch ~/.wipedone
