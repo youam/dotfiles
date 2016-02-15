@@ -36,6 +36,8 @@ function wipespace () {
 	echo wiping $wipemb mb on $fs
 	# do the wiping as gentle as possible, idle only
 	ionice --class 3 dd if=/dev/zero of=$fs/WIPESPACE.TMP conv=notrunc oflag=append bs=1024k count=$wipemb 2>/dev/null
+	# actually force it to disk
+	sync
 	wipespace $fs $lim
 }
 
