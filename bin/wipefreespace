@@ -42,7 +42,7 @@ function wipespace () {
 }
 
 if [ -e ~/.wipedone ]; then
-	d=$(stat -printf %Y ~/.wipedone)
+	d=$(stat --printf %Y ~/.wipedone)
 	n=$(date +%s)
 	# a bit less than a day, to reduce funny errors
 	if [ $((d+86000)) -gt $n ]; then
