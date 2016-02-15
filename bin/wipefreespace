@@ -4,7 +4,21 @@ set -o pipefail
 set -u
 set -e
 
-aptitude clean
+
+function wipeswap () {
+	local part
+	if [ 2 != "$(swapon -s | wc -l)" ]; then
+		echo "unknown swap layout, aborting"
+		return
+	fi
+	part=$(swapon -s | tail -n1 | awk '{print $1}')
+	echo "wiping swap partition $part"
+	swapoff $part
+	dd if=/dev/zero of=$part bs=1024k
+	mswap -L swap $part
+	swapon -a
+}
+
 
 function wipespace () {
 	# usage: wipespaec $path $space
@@ -22,6 +36,10 @@ function wipespace () {
 	dd if=/dev/zero of=$fs/WIPESPACE.TMP conv=notrunc oflag=append bs=1024k count=$wipemb 2>/dev/null
 	wipespace $fs $lim
 }
+
+aptitude clean
+
+wipeswap
 
 df -P | grep '^/' | while read fs_dev fs_size x fs_free x fs_mnt; do
 	wipespace $fs_mnt 128
