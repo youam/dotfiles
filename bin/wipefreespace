@@ -17,6 +17,7 @@ function wipespace () {
 	freekb=$(df -P $fs | tail -n1 | awk '{print $4}')
 	if [ $freekb -lt $((lim*1024)) ]; then return; fi
 	wipemb=$((((freekb/1024)-$lim)/2))
+	if [ $wipemb -lt 1 ]; then return; fi
 	echo wiping $wipemb mb on $fs
 	dd if=/dev/zero of=$fs/WIPESPACE.TMP conv=notrunc oflag=append bs=1024k count=$wipemb 2>/dev/null
 	wipespace $fs $lim
