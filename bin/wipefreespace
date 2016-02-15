@@ -14,7 +14,8 @@ function wipeswap () {
 	part=$(swapon -s | tail -n1 | awk '{print $1}')
 	echo "wiping swap partition $part"
 	swapoff $part
-	dd if=/dev/zero of=$part bs=1024k
+	# dd returns error on ENOSPACE, but i don't want to calc correct size
+	dd if=/dev/zero of=$part bs=1024k || true
 	mswap -L swap $part
 	swapon -a
 }
