@@ -16,7 +16,7 @@ function wipeswap () {
 	swapoff $part
 	# dd returns error on ENOSPACE, but i don't want to calc correct size
 	dd if=/dev/zero of=$part bs=1024k || true
-	mswap -L swap $part
+	mkswap -L swap $part
 	swapon -a
 }
 
