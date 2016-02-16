@@ -45,7 +45,7 @@ if [ -e ~/.wipedone ]; then
 	d=$(stat --printf %Y ~/.wipedone)
 	n=$(date +%s)
 	# a bit less than a day, to reduce funny errors
-	if [ $((d+86000*(2)) -gt $n ]; then
+	if [ $((d+86000*2)) -gt $n ]; then
 		echo "already did run in the last two days. remove ~/.wipedone to run anyway"
 		exit 2
 	fi
