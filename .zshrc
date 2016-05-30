@@ -69,21 +69,6 @@ precmd () {
 }
 
 #
-# command line history
-#
-
-HISTFILE=~/.histfile
-HISTSIZE=100000
-SAVEHIST=100000
-
-# append to the history file when executing commands, not on exit
-setopt INC_APPEND_HISTORY
-
-# reload the history file before adding to it
-setopt SHARE_HISTORY
-
-setopt hist_find_no_dups hist_ignore_dups
-#
 # shell features
 #
 
