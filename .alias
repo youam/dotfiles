@@ -1,0 +1,59 @@
+alias	ls='ls --color=auto'
+
+rmdirs	() { find "$@" -mindepth 1 -type d -empty -print -delete ; }	# remove empty directories
+
+alias   unik='perl -ne "print unless \$seen{\$_}++"'	# print only globally unique lines
+
+ltree	() { tree -C "$@" | less -r ; }
+lftpls	() { lftp -c "open $1 ; ls" ; }
+
+alias	insecssh='ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null"'
+alias d2h="perl -e 'printf qq|%X\n|, int( shift )'"
+alias d2o="perl -e 'printf qq|%o\n|, int( shift )'"
+alias d2b="perl -e 'printf qq|%b\n|, int( shift )'"
+alias h2d="perl -e 'printf qq|%d\n|, hex( shift )'"
+alias h2o="perl -e 'printf qq|%o\n|, hex( shift )'"
+alias h2b="perl -e 'printf qq|%b\n|, hex( shift )'"
+alias o2h="perl -e 'printf qq|%X\n|, oct( shift )'"
+alias o2d="perl -e 'printf qq|%d\n|, oct( shift )'"
+alias o2b="perl -e 'printf qq|%b\n|, oct( shift )'"
+alias c2h="uconv -x 'any-hex;'"
+alias c2n="uconv -x 'hex-any; any-name'"
+
+alias vless='vim -u /usr/share/vim/vim71/macros/less.vim'
+
+lessvim() { #{{{
+	if test $# = 0; then
+		vim --cmd 'let no_plugin_maps = 1' -c 'runtime! macros/less.vim' -c ':set scrolloff=9999' -
+	else
+		vim --cmd 'let no_plugin_maps = 1' -c 'runtime! macros/less.vim' -c ':set scrolloff=9999' "$@"
+	fi
+} #}}}
+
+alias	aptitude='sudo aptitude'
+alias   ip='sudo ip'
+
+globmatches () { perl -ne '@x=glob;print scalar @x;' }
+
+vnice() {
+	if [[ -z "$1" ]] ; then
+		echo "vnice [ <pid>... | <program> ]" >&2
+		return 1
+	elif [[ "$1" =~ ^[0-9]+$ ]] ; then
+		while [[ "$1" =~ ^[0-9]+$ ]] ; do
+			ionice -n7 -p $1
+			renice 20 $1
+			shift
+		done
+	else
+		ionice -n7 nice -n20 $@
+	fi
+}
+
+expandurl () {
+	wget -O - --max-redirect=5 "$*" 2>&1 | grep --color=auto '^Location'
+}
+
+#function rmadison {(/usr/bin/rmadison -u bpo "$@"; /usr/bin/rmadison "$@")|sort}
+
+alias update-tags='ctags -R; find . -name "*.c" -o -name "*.cc" -o -name "*.hpp" -o -name "*.hh" -o -name "*.h" -o -name "*.cpp" -o -name "*.py" -o -name "*.pl" -o -name "*.pm" | cscope -Rb -i-'

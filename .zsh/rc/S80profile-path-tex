@@ -1,0 +1,7 @@
+# add private path for latex files
+#   trailing colon -> append standard search path to TEXINPUTS
+#   trailing double slash -> search directory recursively
+if [ -d "$HOME/.tex" ]; then
+	export TEXINPUTS="$HOME/.tex//:"
+fi
+

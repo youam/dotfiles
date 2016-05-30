@@ -1,0 +1,18 @@
+#
+# prompt settings
+#
+
+PROMPT=$'%0(?..%{\033[31m%}%B%?%b:)%(!.%{\033[31m%}%B.%{\033[34m%}%B%n@)%m%b:%B%30<...<%~%b%(1v.%F{green}%1v%f.)%(!.#.$) '
+#        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+# print the return status of the last executed command if it is not null
+
+#                                  ^^^^^^^^^^^^^^^^^^^                 ^                    ^^^^^ ^
+# if we're root, print the hostname bold red, suffix the prompt with a hash
+# mark
+#                                  ^^^^              ^^^^^^^^^^^^^^^^^^^                    ^^^ ^^^
+# if we're not root, prepend the hostname with the user name, printed in bold
+# blue, suffix the prompt with a dolar sign.
+
+#                                                                              ^^^^^^^^^^^^^^^^^^^^^
+# limit the rest of the prompt to a total of 30 characters, of which the first
+# chars will be replaced by '...'

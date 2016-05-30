@@ -1,0 +1,4 @@
+if [ -d "$HOME/.perl" ]; then
+	export PERL5LIB=$HOME/.perl
+fi
+

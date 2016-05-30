@@ -10,38 +10,6 @@ if [ -e "$HOME/.alias" ]; then
 	source "$HOME/.alias"
 fi
 
-# add private path for latex files
-#   trailing colon -> append standard search path to TEXINPUTS
-#   trailing double slash -> search directory recursively
-if [ -e "$HOME/.tex" ]; then
-	export TEXINPUTS="$HOME/.tex//:"
-fi
-
-#
-# keybinding settings
-#
-
-# select VI keybindings
-bindkey -v
-
-bindkey "^R" history-incremental-search-backward
-
-#
-# prompt settings
-#
-
-PROMPT=$'%0(?..%{\033[31m%}%B%?%b:)%(!.%{\033[31m%}%B.%{\033[34m%}%B%n@)%m%b:%B%30<...<%~%b%(!.#.$) '
-#        ^^^^^^^^^^^^^^^^^^^^^^^^^^
-# print the return status of the last executed command if it is not null
-#                                  ^^^^^^^^^^^^^^^^^^^                 ^                    ^^^^^ ^
-# if we're root, print the hostname bold red, suffix the prompt with a hash
-# mark
-#                                  ^^^^              ^^^^^^^^^^^^^^^^^^^                    ^^^ ^^^
-# if we're not root, prepend the hostname with the user name, printed in bold
-# blue, suffix the prompt with a dolar sign.
-#                                                                              ^^^^^^^^^^^^^^^^^^^^^
-# limit the rest of the prompt to a total of 30 characters, of which the first
-# chars will be replaced by '...'
 
 #
 # screen colaboration
@@ -100,10 +68,6 @@ compinit
 setopt auto_pushd
 
 unsetopt autocd nomatch
-
-if [ -d $HOME/.perl ]; then
-	export PERL5LIB=$HOME/.perl
-fi
 
 #svn-mirror
 export SVMREPOS=$HOME/.vcs/svn-mirror

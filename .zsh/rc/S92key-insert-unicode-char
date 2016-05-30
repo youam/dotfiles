@@ -1,0 +1,4 @@
+# from http://michael-prokop.at/blog/2007/02/24/zsh-insert-unicode-char/
+autoload insert-unicode-char
+zle -N insert-unicode-char
+bindkey '^Xi' insert-unicode-char

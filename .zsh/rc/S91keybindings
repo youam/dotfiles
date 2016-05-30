@@ -1,0 +1,10 @@
+#
+# keybinding settings
+#
+
+# select VI keybindings
+bindkey -v
+
+bindkey "^R" history-incremental-search-backward
+bindkey "^P" history-beginning-search-backward
+
