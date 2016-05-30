@@ -6,11 +6,6 @@
 # path settings
 #
 
-# if my home has a bin/ directory, I want it to be the first entry in my $PATH
-if [ -d "$HOME/bin" ]; then
-	export PATH="$HOME/bin:$PATH"
-fi
-
 if [ -e "$HOME/.alias" ]; then
 	source "$HOME/.alias"
 fi
